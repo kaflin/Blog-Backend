@@ -15,6 +15,7 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
+		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -100,16 +101,23 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.8</version>
-			<scope>compile</scope>
+			<version>1.18.18</version>
+			<scope>provided</scope>
 		</dependency>
 
+<!--		<dependency>-->
+<!--			<groupId>org.projectlombok</groupId>-->
+<!--			<artifactId>lombok-mapstruct-binding</artifactId>-->
+<!--			<version>0.2.0</version>-->
+<!--		</dependency>-->
+
+
 		<!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct</artifactId>
-			<version>1.4.2.Final</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.mapstruct</groupId>-->
+<!--			<artifactId>mapstruct</artifactId>-->
+<!--			<version>1.4.2.Final</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.xmlunit</groupId>
 			<artifactId>xmlunit-core</artifactId>
@@ -132,6 +140,12 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.9.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${org.mapstruct.version}</version>
+			<scope>compile</scope>
+		</dependency>
 
 
 	</dependencies>
@@ -148,6 +162,34 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version> <!-- or newer version -->
+				<configuration>
+					<source>1.8</source> <!-- depending on your project -->
+					<target>1.8</target> <!-- depending on your project -->
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${org.mapstruct.version}</version>
+						</path>
+						<path>
+						<groupId>org.projectlombok</groupId>
+						<artifactId>lombok</artifactId>
+							<version>1.18.18</version>
+							<scope>provided</scope>
+					   </path>
+						<!-- This is needed when using Lombok 1.8.16 and above -->
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok-mapstruct-binding</artifactId>
+							<version>0.2.0</version>
+						</path>
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 		</plugins>
