@@ -27,7 +27,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userOptional= userRepository.findByUsername(username);
 
-        User user=userOptional.orElseThrow(()->new UsernameNotFoundException("No user "+
+        User user=userOptional
+                .orElseThrow(()->new UsernameNotFoundException("No user "+
                 "Found with username:"+username));
 
         //Using above user object,we creates another object,its like wrapper with same name User(this class is provided by springframework,which implements userDetails interface
