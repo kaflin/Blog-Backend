@@ -17,8 +17,8 @@ import java.security.cert.CertificateException;
 import java.time.Instant;
 import java.util.Date;
 
+import static io.jsonwebtoken.Jwts.claims;
 import static io.jsonwebtoken.Jwts.parser;
-import static java.util.Date.from;
 
 @Service
 public class JwtProvider {
@@ -63,5 +63,35 @@ public class JwtProvider {
     public Long getJwtExpirationInMillis() {
         return jwtExpirationInMillis;
     }
+
+    public boolean validateToken(String jwt)
+    {
+        //We can validate Token using public key
+        parser().setSigningKey(getPublicKey())
+                .parseClaimsJws(jwt);
+        return true;
+    }
+
+    private PublicKey getPublicKey() {
+        try
+        {
+            return keyStore.getCertificate("springblog").getPublicKey();
+        }
+        catch(KeyStoreException e)
+        {
+            throw new SpringRedditException("Exception Occurred while"+
+                    "retrieving public key from keystore");
+        }
+    }
+
+    public String getUsernameFromJwt(String token)
+    {
+        Claims claims= parser()
+                .setSigningKey(getPublicKey())
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();
+    }
+
 
 }

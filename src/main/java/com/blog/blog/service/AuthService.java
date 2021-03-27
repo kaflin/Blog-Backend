@@ -1,27 +1,22 @@
 package com.blog.blog.service;
-
-
 import com.blog.blog.Model.NotificationEmail;
 import com.blog.blog.Model.User;
 import com.blog.blog.Model.VerificationToken;
 import com.blog.blog.dto.AuthenticationResponse;
 import com.blog.blog.dto.LoginRequest;
-import com.blog.blog.dto.RefreshTokenRequest;
 import com.blog.blog.dto.RegisterRequest;
 import com.blog.blog.exceptions.SpringRedditException;
 import com.blog.blog.repository.UserRepository;
 import com.blog.blog.repository.VerificationTokenRepository;
 import com.blog.blog.security.JwtProvider;
 import lombok.AllArgsConstructor;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.SecondaryTable;
 import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.Optional;
@@ -99,4 +94,12 @@ public class AuthService {
 
     }
 
+    @Transactional
+    public User getCurrentUser() {
+       org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.
+               getContext().getAuthentication().getPrincipal();
+
+        return userRepository.findByUsername(principal.getUsername())
+        .orElseThrow(()->new UsernameNotFoundException("User name not found-"+principal.getUsername()));
+    }
 }
