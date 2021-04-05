@@ -1,17 +1,22 @@
 package com.blog.blog.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostResponse1 {
+public class CommentsDto {
 
+    private Long id;
+    private Long postId;
     private String postName;
+    private Instant createdDate;
+    private String text;
+    private Long userId;
     private String userName;
-    private String subredditName;
-
 }
