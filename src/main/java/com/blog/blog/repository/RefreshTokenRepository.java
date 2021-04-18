@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken,Long> {
     Optional<RefreshToken> findByToken(String token);
+
+    void deleteByToken(String token);//If there is no any token database ,then it throws an error
 }
