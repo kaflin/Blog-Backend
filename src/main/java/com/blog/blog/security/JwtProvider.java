@@ -25,7 +25,7 @@ public class JwtProvider {
 
     private KeyStore keyStore;
 
-    @Value("900000")
+    @Value("${jwt.expiration.time}")
     private Long jwtExpirationInMillis;
 
     @PostConstruct
@@ -47,7 +47,7 @@ public class JwtProvider {
                 .setSubject(principal.getUsername())
                 .setIssuedAt(Date.from(Instant.now()))
                 .signWith(getPrivateKey())
-                .setExpiration(Date.from(Instant.now().plusMillis(jwtExpirationInMillis)))
+                .setExpiration(Date.from(Instant.now().plusMillis(jwtExpirationInMillis)))//We use Date.from to convert date Object from Instant
                 .compact();
     }
 
@@ -94,4 +94,13 @@ public class JwtProvider {
     }
 
 
+    public String generateTokenWithUserName(String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(Date.from(Instant.now()))
+                .signWith(getPrivateKey())
+                .setExpiration(Date.from(Instant.now().plusMillis(jwtExpirationInMillis)))
+                .compact();
+
+    }
 }

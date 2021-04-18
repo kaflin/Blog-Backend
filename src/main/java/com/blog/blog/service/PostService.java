@@ -6,7 +6,6 @@ import com.blog.blog.Model.Subreddit;
 import com.blog.blog.Model.User;
 import com.blog.blog.dto.PostRequest;
 import com.blog.blog.dto.PostResponse;
-import com.blog.blog.dto.PostResponse1;
 import com.blog.blog.exceptions.PostNotFoundException;
 import com.blog.blog.exceptions.SubredditNotFoundException;
 import com.blog.blog.mapper.PostMapper;
@@ -15,7 +14,6 @@ import com.blog.blog.repository.SubredditRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.transaction.Transactional;
 import java.util.List;
