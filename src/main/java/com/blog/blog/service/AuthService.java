@@ -41,8 +41,11 @@ public class AuthService {
 
     public void signup(RegisterRequest registerRequest) {
         User user=new User();
+
         user.setUsername((registerRequest.getUsername()));
-        user.setEmail(registerRequest.getEmail());
+        if(registerRequest.getEmail() !=null) {
+            user.setEmail(registerRequest.getEmail());
+        }
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setCreated(Instant.now());
         user.setEnabled(false);
@@ -122,6 +125,8 @@ public class AuthService {
         return !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
 
     }
+
+
 }
 
 
